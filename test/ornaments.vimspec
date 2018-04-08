@@ -1,0 +1,93 @@
+Describe ornaments
+  It requires Vim compiled with the +timers feature
+    Assert Equals(has('timers'), 1)
+  End
+
+  It initializes b:ornaments_queue to []
+    new
+    Assert Equals(b:ornaments_queue, [])
+    close!
+  End
+End
+
+
+Describe ornaments
+  Before
+    new
+    execute "normal! iVim\<Esc>"
+  End
+
+  After
+    close!
+  End
+
+  It setlines "Vim" in 0 second after typing "Vim"
+    Assert Equals(getline('.'), 'Vim')
+  End
+
+  It setlines "Rei" in 50(+10) seconds after typing "Vim"
+    sleep 60m
+    Assert Equals(getline('.'), 'Rei')
+  End
+
+  It setlines "Sfj" in 100(+10) seconds after typing "Vim"
+    sleep 110m
+    Assert Equals(getline('.'), 'Sfj')
+  End
+
+  It setlines "Tgk" in 150(+10) seconds after typing "Vim"
+    sleep 160m
+    Assert Equals(getline('.'), 'Tgk')
+  End
+
+  It setlines "Uhl" in 200(+10) seconds after typing "Vim"
+    sleep 210m
+    Assert Equals(getline('.'), 'Uhl')
+  End
+
+  It setlines "Vim" in 250(+10) seconds after typing "Vim"
+    sleep 260m
+    Assert Equals(getline('.'), 'Vim')
+  End
+End
+
+
+Describe ornaments#ornamentable()
+  It returns 1 by default
+    new
+    Assert Equals(ornaments#ornamentable(), 1)
+    close!
+  End
+
+  It returns 0 when b:ornaments_enable is 0
+    new
+    let b:ornaments_enable = 0
+    Assert Equals(ornaments#ornamentable(), 0)
+    unlet b:ornaments_enable
+    close!
+  End
+
+  It returns 0 when g:ornaments_enable is 0
+    new
+    let g:ornaments_enable = 0
+    Assert Equals(ornaments#ornamentable(), 0)
+    unlet g:ornaments_enable
+    close!
+  End
+
+  It returns 1 when b:ornaments_enable is 1
+    new
+    let b:ornaments_enable = 1
+    Assert Equals(ornaments#ornamentable(), 1)
+    unlet b:ornaments_enable
+    close!
+  End
+
+  It returns 1 when g:ornaments_enable is 1
+    new
+    let g:ornaments_enable = 1
+    Assert Equals(ornaments#ornamentable(), 1)
+    unlet g:ornaments_enable
+    close!
+  End
+End

@@ -1,0 +1,3 @@
+# vim-ornaments
+
+**vim-ornaments** is a Vim plugin.
