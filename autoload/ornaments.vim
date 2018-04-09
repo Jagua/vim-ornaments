@@ -9,12 +9,24 @@ function! ornaments#on_BufEnter() abort
 endfunction
 
 
+function! ornaments#on_CmdwinEnter() abort
+  if ornaments#ornamentable()
+    call ornaments#start()
+  endif
+endfunction
+
+
 function! ornaments#on_BufDelete() abort
   call ornaments#stop()
 endfunction
 
 
 function! ornaments#on_BufLeave() abort
+  call ornaments#stop()
+endfunction
+
+
+function! ornaments#on_CmdwinLeave() abort
   call ornaments#stop()
 endfunction
 
