@@ -53,41 +53,39 @@ End
 
 
 Describe ornaments#ornamentable()
-  It returns 1 by default
+  Before
     new
-    Assert Equals(ornaments#ornamentable(), 1)
+  End
+
+  After
     close!
+  End
+
+  It returns 1 by default
+    Assert Equals(ornaments#ornamentable(), 1)
   End
 
   It returns 0 when b:ornaments_enable is 0
-    new
     let b:ornaments_enable = 0
     Assert Equals(ornaments#ornamentable(), 0)
     unlet b:ornaments_enable
-    close!
   End
 
   It returns 0 when g:ornaments_enable is 0
-    new
     let g:ornaments_enable = 0
     Assert Equals(ornaments#ornamentable(), 0)
     unlet g:ornaments_enable
-    close!
   End
 
   It returns 1 when b:ornaments_enable is 1
-    new
     let b:ornaments_enable = 1
     Assert Equals(ornaments#ornamentable(), 1)
     unlet b:ornaments_enable
-    close!
   End
 
   It returns 1 when g:ornaments_enable is 1
-    new
     let g:ornaments_enable = 1
     Assert Equals(ornaments#ornamentable(), 1)
     unlet g:ornaments_enable
-    close!
   End
 End
