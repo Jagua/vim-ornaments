@@ -32,7 +32,7 @@ endfunction
 
 
 function! ornaments#on_InsertCharPre() abort
-  if ornaments#ornamentable() && v:char =~# '[[:graph:]]'
+  if ornaments#ornamentable() && v:char =~# '[[:graph:][:blank:]]'
     let [_, lnum, col; _] = getcurpos()
     let step = get(g:, 'ornaments_step', 5)
     call add(b:ornaments_queue, {

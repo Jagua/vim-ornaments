@@ -52,6 +52,23 @@ Describe ornaments
 End
 
 
+Describe ornaments
+  Before
+    new
+    execute "normal! iVim Vim\<Esc>"
+  End
+
+  After
+    close!
+  End
+
+  It works properly even if text includes spaces
+    sleep 260m
+    Assert Equals(getline('.'), 'Vim Vim')
+  End
+End
+
+
 Describe ornaments#ornamentable()
   Before
     new
