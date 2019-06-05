@@ -2,37 +2,37 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
-function! ornaments#on_BufEnter() abort
-  if ornaments#ornamentable()
-    call ornaments#start()
+function! ornaments#setline#on_BufEnter() abort
+  if ornaments#setline#ornamentable()
+    call ornaments#setline#start()
   endif
 endfunction
 
 
-function! ornaments#on_CmdwinEnter() abort
-  if ornaments#ornamentable()
-    call ornaments#start()
+function! ornaments#setline#on_CmdwinEnter() abort
+  if ornaments#setline#ornamentable()
+    call ornaments#setline#start()
   endif
 endfunction
 
 
-function! ornaments#on_BufDelete() abort
-  call ornaments#stop()
+function! ornaments#setline#on_BufDelete() abort
+  call ornaments#setline#stop()
 endfunction
 
 
-function! ornaments#on_BufLeave() abort
-  call ornaments#stop()
+function! ornaments#setline#on_BufLeave() abort
+  call ornaments#setline#stop()
 endfunction
 
 
-function! ornaments#on_CmdwinLeave() abort
-  call ornaments#stop()
+function! ornaments#setline#on_CmdwinLeave() abort
+  call ornaments#setline#stop()
 endfunction
 
 
-function! ornaments#on_InsertCharPre() abort
-  if ornaments#ornamentable() && v:char =~# '[[:graph:][:blank:]]'
+function! ornaments#setline#on_InsertCharPre() abort
+  if ornaments#setline#ornamentable() && v:char =~# '[[:graph:][:blank:]]'
     let [_, lnum, col; _] = getcurpos()
     let step = get(g:, 'ornaments_step', 5)
     call add(b:ornaments_queue, {
@@ -44,7 +44,7 @@ function! ornaments#on_InsertCharPre() abort
 endfunction
 
 
-function! ornaments#start() abort
+function! ornaments#setline#start() abort
   let interval = get(g:, 'ornaments_interval', 50)
   let b:ornaments_queue = []
   let b:ornaments_timer_id =
@@ -52,7 +52,7 @@ function! ornaments#start() abort
 endfunction
 
 
-function! ornaments#stop() abort
+function! ornaments#setline#stop() abort
   if exists('b:ornaments_timer_id')
     call timer_stop(b:ornaments_timer_id)
     unlet b:ornaments_timer_id
@@ -63,7 +63,7 @@ function! ornaments#stop() abort
 endfunction
 
 
-function! ornaments#ornamentable() abort
+function! ornaments#setline#ornamentable() abort
   return get(g:, 'ornaments_enable', 1) && get(b:, 'ornaments_enable', 1) && has('timers')
 endfunction
 

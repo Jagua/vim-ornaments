@@ -69,7 +69,7 @@ Describe ornaments
 End
 
 
-Describe ornaments#ornamentable()
+Describe ornaments#setline#ornamentable()
   Before
     new
   End
@@ -79,30 +79,30 @@ Describe ornaments#ornamentable()
   End
 
   It returns 1 by default
-    Assert Equals(ornaments#ornamentable(), 1)
+    Assert Equals(ornaments#setline#ornamentable(), 1)
   End
 
   It returns 0 when b:ornaments_enable is 0
     let b:ornaments_enable = 0
-    Assert Equals(ornaments#ornamentable(), 0)
+    Assert Equals(ornaments#setline#ornamentable(), 0)
     unlet b:ornaments_enable
   End
 
   It returns 0 when g:ornaments_enable is 0
     let g:ornaments_enable = 0
-    Assert Equals(ornaments#ornamentable(), 0)
+    Assert Equals(ornaments#setline#ornamentable(), 0)
     unlet g:ornaments_enable
   End
 
   It returns 1 when b:ornaments_enable is 1
     let b:ornaments_enable = 1
-    Assert Equals(ornaments#ornamentable(), 1)
+    Assert Equals(ornaments#setline#ornamentable(), 1)
     unlet b:ornaments_enable
   End
 
   It returns 1 when g:ornaments_enable is 1
     let g:ornaments_enable = 1
-    Assert Equals(ornaments#ornamentable(), 1)
+    Assert Equals(ornaments#setline#ornamentable(), 1)
     unlet g:ornaments_enable
   End
 End
