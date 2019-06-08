@@ -7,4 +7,4 @@ lint:
 	@vimlparser plugin/*.vim autoload/*/*.vim > /dev/null
 
 test:
-	@themis
+	@themis test/setline test/popup

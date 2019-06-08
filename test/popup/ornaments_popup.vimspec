@@ -1,0 +1,67 @@
+let s:scope = themis#helper('scope')
+
+
+Describe ornaments#popup
+  It requires Vim compiled with the +timers feature
+    Assert True(has('timers'))
+  End
+
+  It requires Vim compiled with the +textprop feature
+    Assert True(has('textprop'))
+  End
+End
+
+
+Describe ornaments#popup
+  Before all
+    let funcs = s:scope.funcs('autoload/ornaments/popup.vim')
+  End
+
+  After all
+    unlet funcs
+  End
+
+  Before
+    if !has('timers') || !has('textprop')
+      Skip require Vim +timers and +textprop features
+    endif
+  End
+
+  Describe .grace_notes
+    Context ('a', 3)
+      It returns ['a', 'b', 'c', 'd']
+        Assert Equals(funcs.grace_notes('a', 3), ['a', 'b', 'c', 'd'])
+      End
+    End
+
+    Context ('z', 3)
+      It returns ['z', 'a', 'b', 'c']
+        Assert Equals(funcs.grace_notes('z', 3), ['z', 'a', 'b', 'c'])
+      End
+    End
+
+    Context ('A', 3)
+      It returns ['A', 'B', 'C', 'D']
+        Assert Equals(funcs.grace_notes('A', 3), ['A', 'B', 'C', 'D'])
+      End
+    End
+
+    Context ('Z', 3)
+      It returns ['Z', 'A', 'B', 'C']
+        Assert Equals(funcs.grace_notes('Z', 3), ['Z', 'A', 'B', 'C'])
+      End
+    End
+
+    Context ('0', 3)
+      It returns ['0', '1', '2', '3']
+        Assert Equals(funcs.grace_notes('0', 3), ['0', '1', '2', '3'])
+      End
+    End
+
+    Context ('9', 3)
+      It returns ['9', '0', '1', '2']
+        Assert Equals(funcs.grace_notes('9', 3), ['9', '0', '1', '2'])
+      End
+    End
+  End
+End
