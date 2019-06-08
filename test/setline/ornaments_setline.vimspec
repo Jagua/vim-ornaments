@@ -1,4 +1,4 @@
-Describe ornaments
+Describe ornaments#setline
   It requires Vim compiled with the +timers feature
     Assert Equals(has('timers'), 1)
   End
@@ -11,7 +11,7 @@ Describe ornaments
 End
 
 
-Describe ornaments
+Describe ornaments#setline
   Before
     new
     execute "normal! iVim\<Esc>"
@@ -52,7 +52,7 @@ Describe ornaments
 End
 
 
-Describe ornaments
+Describe ornaments#setline
   Before
     new
     execute "normal! iVim Vim\<Esc>"
