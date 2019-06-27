@@ -9,7 +9,7 @@ let ornaments_instrument = get(g:, 'ornaments_instrument', has('textprop') ? 'po
 
 if ornaments_instrument ==# 'popup'
   if !has('textprop')
-    throw 'ornaments: require +textprop feature'
+    throw 'ornaments: popup: require +textprop feature'
   endif
 
   augroup ornaments-autocmd

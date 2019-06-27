@@ -58,7 +58,7 @@ function! s:update(popup_opts, grace_notes, interval) abort
 
   let winid = popup_create(a:grace_notes[-1], a:popup_opts)
   if winid == 0
-    throw 'ornaments: failed popup_create()'
+    throw 'ornaments: popup: failed popup_create()'
   endif
 
   if type(a:popup_opts.line) != v:t_number
