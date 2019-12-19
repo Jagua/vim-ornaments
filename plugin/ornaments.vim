@@ -4,10 +4,14 @@ endif
 let g:loaded_ornaments = 1
 
 
-let ornaments_instrument = get(g:, 'ornaments_instrument', exists('*popup_create') ? 'popup' : 'setline')
+let s:save_cpo = &cpo
+set cpo&vim
 
 
-if ornaments_instrument ==# 'popup'
+let s:ornaments_instrument = get(g:, 'ornaments_instrument', exists('*popup_create') ? 'popup' : 'setline')
+
+
+if s:ornaments_instrument ==# 'popup'
   if !exists('*popup_create')
     throw 'ornaments: popup: require popup_create() function'
   endif
@@ -16,7 +20,7 @@ if ornaments_instrument ==# 'popup'
     autocmd!
     autocmd InsertCharPre * call ornaments#popup#on_InsertCharPre()
   augroup END
-elseif ornaments_instrument ==# 'setline'
+elseif s:ornaments_instrument ==# 'setline'
   augroup ornaments-autocmd
     autocmd!
     autocmd BufEnter * call ornaments#setline#on_BufEnter()
@@ -27,5 +31,9 @@ elseif ornaments_instrument ==# 'setline'
     autocmd InsertCharPre * call ornaments#setline#on_InsertCharPre()
   augroup END
 else
-  throw printf('ornaments: unknown instrument: %s', ornaments_instrument)
+  throw printf('ornaments: unknown instrument: %s', s:ornaments_instrument)
 endif
+
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
