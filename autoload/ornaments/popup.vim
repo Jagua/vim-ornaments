@@ -24,14 +24,26 @@ function! ornaments#popup#ornamentable() abort
 endfunction
 
 
-const s:code_0 = char2nr('0')
-const s:code_9 = char2nr('9')
-const s:code_A = char2nr('A')
-const s:code_Z = char2nr('Z')
-const s:code_a = char2nr('a')
-const s:code_z = char2nr('z')
-const s:size_nu = s:code_9 - s:code_0 + 1
-const s:size_al = s:code_z - s:code_a + 1
+if exists(':const') == 2
+  const s:code_0 = char2nr('0')
+  const s:code_9 = char2nr('9')
+  const s:code_A = char2nr('A')
+  const s:code_Z = char2nr('Z')
+  const s:code_a = char2nr('a')
+  const s:code_z = char2nr('z')
+  const s:size_nu = s:code_9 - s:code_0 + 1
+  const s:size_al = s:code_z - s:code_a + 1
+else
+  let s:code_0 = char2nr('0')
+  let s:code_9 = char2nr('9')
+  let s:code_A = char2nr('A')
+  let s:code_Z = char2nr('Z')
+  let s:code_a = char2nr('a')
+  let s:code_z = char2nr('z')
+  let s:size_nu = s:code_9 - s:code_0 + 1
+  let s:size_al = s:code_z - s:code_a + 1
+  lockvar s:code_0 s:code_9 s:code_A s:code_Z s:code_a s:code_z s:size_nu s:size_al
+endif
 
 
 highlight OrnamentsPopupColor ctermbg=NONE guibg=bg
