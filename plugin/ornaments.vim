@@ -4,12 +4,12 @@ endif
 let g:loaded_ornaments = 1
 
 
-let ornaments_instrument = get(g:, 'ornaments_instrument', has('textprop') ? 'popup' : 'setline')
+let ornaments_instrument = get(g:, 'ornaments_instrument', exists('*popup_create') ? 'popup' : 'setline')
 
 
 if ornaments_instrument ==# 'popup'
-  if !has('textprop')
-    throw 'ornaments: popup: require +textprop feature'
+  if !exists('*popup_create')
+    throw 'ornaments: popup: require popup_create() function'
   endif
 
   augroup ornaments-autocmd
