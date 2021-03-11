@@ -1,6 +1,6 @@
 *ornaments.txt*  ornaments
 
-Version: 0.1.3
+Version: 0.1.4
 Author: Jagua
 License: MIT License
 
@@ -13,7 +13,7 @@ INTRODUCTION                                          *ornaments-introduction*
 
 
 Requirements:
-- Vim (+timers, +textprop)
+- Vim (+timers, +textprop, +conceal)
 
 Latest version:
 https://github.com/Jagua/vim-ornaments
@@ -22,6 +22,9 @@ https://github.com/Jagua/vim-ornaments
 
 ==============================================================================
 CHANGELOG                                                *ornaments-changelog*
+
+0.1.4   2020-03-11
+        - Add instrument with |conceal|.
 
 0.1.3   2019-06-08
         - Add |g:ornaments_instrument|.
