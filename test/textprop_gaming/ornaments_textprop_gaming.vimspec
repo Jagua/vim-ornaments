@@ -1,0 +1,51 @@
+let s:scope = themis#helper('scope')
+
+
+Describe ornaments#textprop_gaming
+  It requires Vim compiled with the +timers feature
+    Assert True(has('timers'))
+  End
+
+  It requires Vim compiled with the +textprop feature
+    Assert True(has('textprop'))
+  End
+End
+
+
+Describe ornaments#textprop_gaming
+  Before all
+    let funcs = s:scope.funcs('autoload/ornaments/textprop_gaming.vim')
+  End
+
+  After all
+    unlet funcs
+  End
+
+  Before each
+    if !has('timers') || !has('textprop')
+      Skip require Vim +timers and +textprop features
+    endif
+
+    new
+    let g:ornaments_step = 2
+    let g:ornaments_interval = 50
+  End
+
+  After each
+    unlet g:ornaments_step
+    unlet g:ornaments_interval
+    close!
+  End
+
+  It should exist text properties directly after typing
+    execute "normal! iTEST\<Esc>"
+    sleep 25m
+    Assert NotEmpty(prop_list(1))
+  End
+
+  It should remove text properties after a while
+    execute "normal! iTEST\<Esc>"
+    sleep 125m
+    Assert Empty(prop_list(1))
+  End
+End

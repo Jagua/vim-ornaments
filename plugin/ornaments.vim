@@ -11,7 +11,18 @@ set cpo&vim
 let s:ornaments_instrument = get(g:, 'ornaments_instrument', exists('*popup_create') ? 'popup' : has('conceal') ? 'conceal' : 'setline')
 
 
-if s:ornaments_instrument ==# 'conceal'
+if s:ornaments_instrument ==# 'textprop_gaming'
+  if !has('textprop')
+    throw 'ornaments: textprop_gaming: require Vim compiled with +textprop feature'
+  endif
+
+  augroup ornaments-autocmd
+    autocmd!
+    autocmd InsertCharPre * call ornaments#textprop_gaming#on_InsertCharPre()
+    autocmd BufWinEnter * call ornaments#textprop_gaming#on_BufWinEnter()
+    autocmd ColorScheme * call ornaments#textprop_gaming#on_ColorScheme()
+  augroup END
+elseif s:ornaments_instrument ==# 'conceal'
   if !has('conceal')
     throw 'ornaments: conceal: require Vim compiled with +conceal feature'
   endif

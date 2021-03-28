@@ -1,6 +1,6 @@
 *ornaments.txt*  ornaments
 
-Version: 0.1.4
+Version: 0.1.5
 Author: Jagua
 License: MIT License
 
@@ -23,7 +23,10 @@ https://github.com/Jagua/vim-ornaments
 ==============================================================================
 CHANGELOG                                                *ornaments-changelog*
 
-0.1.4   2020-03-11
+0.1.5   2021-03-29
+        - Add instrument with |textprop|.
+
+0.1.4   2021-03-11
         - Add instrument with |conceal|.
 
 0.1.3   2019-06-08
