@@ -1,6 +1,3 @@
-let s:scope = themis#helper('scope')
-
-
 Describe ornaments#textprop_gaming
   It requires Vim compiled with the +timers feature
     Assert True(has('timers'))
@@ -14,11 +11,9 @@ End
 
 Describe ornaments#textprop_gaming
   Before all
-    let funcs = s:scope.funcs('autoload/ornaments/textprop_gaming.vim')
-  End
-
-  After all
-    unlet funcs
+    let g:ornaments_instrument = 'textprop_gaming'
+    unlet! g:loaded_ornaments
+    runtime plugin/ornaments.vim
   End
 
   Before each

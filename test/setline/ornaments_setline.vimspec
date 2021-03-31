@@ -1,4 +1,10 @@
 Describe ornaments#setline
+  Before all
+    let g:ornaments_instrument = 'setline'
+    unlet! g:loaded_ornaments
+    runtime plugin/ornaments.vim
+  End
+
   It requires Vim compiled with the +timers feature
     Assert Equals(has('timers'), 1)
   End
@@ -12,6 +18,12 @@ End
 
 
 Describe ornaments#setline
+  Before all
+    let g:ornaments_instrument = 'setline'
+    unlet! g:loaded_ornaments
+    runtime plugin/ornaments.vim
+  End
+
   Before
     new
     execute "normal! iVim\<Esc>"

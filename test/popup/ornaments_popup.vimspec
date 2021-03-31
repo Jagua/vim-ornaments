@@ -65,3 +65,40 @@ Describe ornaments#popup
     End
   End
 End
+
+
+Describe ornaments#popup
+  Before all
+    let g:ornaments_instrument = 'popup'
+    unlet! g:loaded_ornaments
+    runtime plugin/ornaments.vim
+  End
+
+  Before each
+    if !has('timers') || !has('textprop')
+      Skip require Vim +timers and +textprop features
+    endif
+
+    new
+    let g:ornaments_step = 1
+    let g:ornaments_interval = 50
+  End
+
+  After each
+    unlet g:ornaments_step
+    unlet g:ornaments_interval
+    close!
+  End
+
+  It should exist popup directly after typing
+    execute "normal! iTEST\<Esc>"
+    sleep 25m
+    Assert NotEmpty(popup_list())
+  End
+
+  It should remove popup after a while
+    execute "normal! iTEST\<Esc>"
+    sleep 125m
+    Assert Empty(popup_list())
+  End
+End
