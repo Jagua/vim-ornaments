@@ -13,7 +13,13 @@ INTRODUCTION                                          *ornaments-introduction*
 
 
 Requirements:
-- Vim (+timers, +textprop, +conceal)
+- Vim (+timers)
+
+Optionals:
+- |+conceal|
+- |+popupwin|
+- |+textprop|
+
 
 Latest version:
 https://github.com/Jagua/vim-ornaments
