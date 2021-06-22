@@ -2,29 +2,12 @@ let s:scope = themis#helper('scope')
 
 
 Describe ornaments#popup
-  It requires Vim compiled with the +timers feature
-    Assert True(has('timers'))
-  End
-
-  It requires Vim compiled with the +textprop feature
-    Assert True(has('textprop'))
-  End
-End
-
-
-Describe ornaments#popup
   Before all
     let funcs = s:scope.funcs('autoload/ornaments/popup.vim')
   End
 
   After all
     unlet funcs
-  End
-
-  Before
-    if !has('timers') || !has('textprop')
-      Skip require Vim +timers and +textprop features
-    endif
   End
 
   Describe .grace_notes
@@ -71,12 +54,17 @@ Describe ornaments#popup
   Before all
     let g:ornaments_instrument = 'popup'
     unlet! g:loaded_ornaments
-    runtime plugin/ornaments.vim
+
+    if !has('timers') || !has('popupwin')
+      Throws /ornaments: popup:.*/ :runtime plugin/ornaments.vim
+    else
+      runtime plugin/ornaments.vim
+    endif
   End
 
   Before each
-    if !has('timers') || !has('textprop')
-      Skip require Vim +timers and +textprop features
+    if !has('timers') || !has('popupwin')
+      Skip require Vim +timers and +popupwin features
     endif
 
     new
@@ -85,20 +73,26 @@ Describe ornaments#popup
   End
 
   After each
-    unlet g:ornaments_step
-    unlet g:ornaments_interval
+    if !has('timers') || !has('popupwin')
+      return
+    endif
+
+    unlet! g:ornaments_step
+    unlet! g:ornaments_interval
     close!
   End
 
   It should exist popup directly after typing
     execute "normal! iTEST\<Esc>"
     sleep 25m
+
     Assert NotEmpty(popup_list())
   End
 
   It should remove popup after a while
     execute "normal! iTEST\<Esc>"
     sleep 125m
+
     Assert Empty(popup_list())
   End
 End

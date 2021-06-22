@@ -2,29 +2,12 @@ let s:scope = themis#helper('scope')
 
 
 Describe ornaments#conceal
-  It requires Vim compiled with the +timers feature
-    Assert True(has('timers'))
-  End
-
-  It requires Vim compiled with the +conceal feature
-    Assert True(has('conceal'))
-  End
-End
-
-
-Describe ornaments#conceal
   Before all
     let funcs = s:scope.funcs('autoload/ornaments/conceal.vim')
   End
 
   After all
     unlet funcs
-  End
-
-  Before
-    if !has('timers') || !has('conceal')
-      Skip require Vim +timers and +conceal features
-    endif
   End
 
   Describe .grace_notes
@@ -63,5 +46,65 @@ Describe ornaments#conceal
         Assert Equals(funcs.grace_notes('9', 3), ['9', '0', '1', '2'])
       End
     End
+  End
+End
+
+
+Describe ornaments#conceal
+  Before all
+    let g:ornaments_instrument = 'conceal'
+    unlet! g:loaded_ornaments
+
+    if !has('timers') || !has('conceal')
+      Throws /ornaments: conceal:.*/ :runtime plugin/ornaments.vim
+    else
+      runtime plugin/ornaments.vim
+    endif
+  End
+
+  Before each
+    if !has('timers') || !has('conceal')
+      Skip require Vim +timers and +conceal features
+    endif
+
+    new
+    let g:ornaments_step = 2
+    let g:ornaments_interval = 50
+  End
+
+  After each
+    if !has('timers') || !has('conceal')
+      return
+    endif
+
+    unlet g:ornaments_step
+    unlet g:ornaments_interval
+    close!
+  End
+
+  It should exist conceal directly after typing
+    if has('nvim')
+      Skip This test does not work on Neovim
+    endif
+
+    execute "normal! iA\<Esc>"
+    sleep 25m
+    let matches = getmatches()
+
+    Assert NotEmpty(matches)
+    Assert HasKey(matches[0], 'conceal')
+    Assert Equals(matches[0].conceal, 'C')
+  End
+
+  It should remove conceal after a while
+    if has('nvim')
+      Skip This test does not work on Neovim
+    endif
+
+    execute "normal! iA\<Esc>"
+    sleep 125m
+    let matches = getmatches()
+
+    Assert Empty(matches)
   End
 End

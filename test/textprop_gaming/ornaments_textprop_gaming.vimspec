@@ -1,19 +1,13 @@
 Describe ornaments#textprop_gaming
-  It requires Vim compiled with the +timers feature
-    Assert True(has('timers'))
-  End
-
-  It requires Vim compiled with the +textprop feature
-    Assert True(has('textprop'))
-  End
-End
-
-
-Describe ornaments#textprop_gaming
   Before all
     let g:ornaments_instrument = 'textprop_gaming'
     unlet! g:loaded_ornaments
-    runtime plugin/ornaments.vim
+
+    if !has('timers') || !has('textprop')
+      Throws /ornaments: textprop_gaming:.*/ :runtime plugin/ornaments.vim
+    else
+      runtime plugin/ornaments.vim
+    endif
   End
 
   Before each
@@ -27,6 +21,10 @@ Describe ornaments#textprop_gaming
   End
 
   After each
+    if !has('timers') || !has('textprop')
+      return
+    endif
+
     unlet g:ornaments_step
     unlet g:ornaments_interval
     close!

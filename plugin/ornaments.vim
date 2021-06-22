@@ -8,12 +8,12 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
-let s:ornaments_instrument = get(g:, 'ornaments_instrument', exists('*popup_create') ? 'popup' : has('conceal') ? 'conceal' : 'setline')
+let s:ornaments_instrument = get(g:, 'ornaments_instrument', has('popupwin') ? 'popup' : has('conceal') ? 'conceal' : 'setline')
 
 
 if s:ornaments_instrument ==# 'textprop_gaming'
-  if !has('textprop')
-    throw 'ornaments: textprop_gaming: require Vim compiled with +textprop feature'
+  if !has('timers') || !has('textprop')
+    throw 'ornaments: textprop_gaming: require Vim compiled with +timers and +textprop feature'
   endif
 
   augroup ornaments-autocmd
@@ -23,8 +23,8 @@ if s:ornaments_instrument ==# 'textprop_gaming'
     autocmd ColorScheme * call ornaments#textprop_gaming#on_ColorScheme()
   augroup END
 elseif s:ornaments_instrument ==# 'conceal'
-  if !has('conceal')
-    throw 'ornaments: conceal: require Vim compiled with +conceal feature'
+  if !has('timers') || !has('conceal')
+    throw 'ornaments: conceal: require Vim compiled with +timers and +conceal feature'
   endif
 
   augroup ornaments-autocmd
@@ -32,8 +32,8 @@ elseif s:ornaments_instrument ==# 'conceal'
     autocmd InsertCharPre * call ornaments#conceal#on_InsertCharPre()
   augroup END
 elseif s:ornaments_instrument ==# 'popup'
-  if !exists('*popup_create')
-    throw 'ornaments: popup: require popup_create() function'
+  if !has('timers') || !has('popupwin')
+    throw 'ornaments: popup: require Vim compiled with +timers and +popupwin feature'
   endif
 
   augroup ornaments-autocmd
@@ -41,6 +41,10 @@ elseif s:ornaments_instrument ==# 'popup'
     autocmd InsertCharPre * call ornaments#popup#on_InsertCharPre()
   augroup END
 elseif s:ornaments_instrument ==# 'setline'
+  if !has('timers')
+    throw 'ornaments: setline: require Vim compiled with +timers feature'
+  endif
+
   augroup ornaments-autocmd
     autocmd!
     autocmd BufEnter * call ornaments#setline#on_BufEnter()
