@@ -25,8 +25,9 @@ function! ornaments#textprop_gaming#on_InsertCharPre() abort
 
   let s:start_time = get(s:, 'start_time', reltime())
   let step = get(g:, 'ornaments_step', 8)
+  let [a, b] = reltime(s:start_time)
   let opts = {
-        \ 'id' : reduce(reltime(s:start_time), {a, b -> a * 1000000 + b}),
+        \ 'id' : a * 1000000 + b,
         \ 'colors' : get(g:, 'ornaments_colors', s:default_colors),
         \ 'time' : get(g:, 'ornaments_interval', 350),
         \ 'lnum' : line('.'),
