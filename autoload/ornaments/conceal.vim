@@ -27,6 +27,7 @@ function! ornaments#conceal#ornamentable() abort
 endfunction
 
 
+unlet! s:code_0 s:code_9 s:code_A s:code_Z s:code_a s:code_z s:size_nu s:size_al
 const s:code_0 = char2nr('0')
 const s:code_9 = char2nr('9')
 const s:code_A = char2nr('A')
