@@ -1,0 +1,49 @@
+---
+name: CI
+on:
+  - push
+  - pull_request
+jobs:
+  ci:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - vim-package: vim
+            vim-command: vim
+            themis_args: -e -s
+            vimlparser-option: -neovim=false
+          - vim-package: neovim
+            vim-command: nvim
+            themis_args: -e -s --headless
+            vimlparser-option: -neovim=true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          path: main
+      - name: Install ${{ matrix.vim-package }}
+        run: sudo apt-get install ${{ matrix.vim-package }}
+      - name: Set up Go
+        uses: actions/setup-go@v2
+      - name: Install linter
+        run: go get github.com/vim-jp/go-vimlparser/cmd/vimlparser
+      - name: Checkout tester
+        uses: actions/checkout@v2
+        with:
+          repository: thinca/vim-themis
+          path: vim-themis
+      - name: Lint with go-vimlparser
+        working-directory: main
+        run: $(go env GOPATH)/bin/vimlparser ${{ matrix.vimlparser-option }} **/*.vim > /dev/null
+      - name: Test with vim-themis
+        working-directory: main
+        env:
+          THEMIS_VIM: ${{ matrix.vim-command }}
+          THEMIS_ARGS: ${{ matrix.themis_args }}
+        run: |
+          lsb_release --all
+          $THEMIS_VIM --version
+          $GITHUB_WORKSPACE/vim-themis/bin/themis --version
+          $GITHUB_WORKSPACE/vim-themis/bin/themis
