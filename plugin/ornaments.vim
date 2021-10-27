@@ -40,6 +40,15 @@ elseif s:ornaments_instrument ==# 'popup'
     autocmd!
     autocmd InsertCharPre * call ornaments#popup#on_InsertCharPre()
   augroup END
+elseif s:ornaments_instrument ==# 'popup_raindrops'
+  if !has('timers') || !has('popupwin')
+    throw 'ornaments: popup_raindrops: require Vim compiled with +timers and +popupwin feature'
+  endif
+
+  augroup ornaments-autocmd
+    autocmd!
+    autocmd InsertCharPre * call ornaments#popup_raindrops#on_InsertCharPre()
+  augroup END
 elseif s:ornaments_instrument ==# 'setline'
   if !has('timers')
     throw 'ornaments: setline: require Vim compiled with +timers feature'
