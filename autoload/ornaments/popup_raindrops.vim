@@ -16,8 +16,8 @@ function! ornaments#popup_raindrops#on_InsertCharPre() abort
         \ 'highlight' : 'OrnamentsRaindrops',
         \}
 
-  call timer_start(0, {-> s:update(char, 0, extend({'line' : 'cursor-1'}, popup_opts), interval, -velocity, winline() - 1, 0, 0.0)})
-  call timer_start(0, {-> s:update(char, 0, extend({'line' : 'cursor+1'}, popup_opts), interval, velocity, winline() + 1, 0, 0.0)})
+  call timer_start(0, {-> s:update(char, 0, extend({'line' : 'cursor-1'}, popup_opts), interval, -velocity, 0, winline() - 1)})
+  call timer_start(0, {-> s:update(char, 0, extend({'line' : 'cursor+1'}, popup_opts), interval, velocity, 0, winline() + 1)})
 endfunction
 
 
@@ -29,7 +29,7 @@ endfunction
 highlight OrnamentsRaindrops ctermbg=NONE guibg=NONE
 
 
-function! s:update(text, winid, popup_opts, interval, velocity, winline, baseline, y) abort
+function! s:update(text, winid, popup_opts, interval, velocity, baseline, y) abort
   let winid = a:winid
   let baseline = a:baseline
 
@@ -39,24 +39,19 @@ function! s:update(text, winid, popup_opts, interval, velocity, winline, baselin
       throw 'ornaments: popup_raindrops: failed popup_create()'
     endif
 
-    let y = a:winline
-    let baseline = popup_getpos(winid).line - y
-  else
-    let y = a:y + a:interval * a:velocity
+    let baseline = popup_getpos(winid).line - a:y
   endif
 
-  let yi = float2nr(round(y))
+  let yi = float2nr(round(a:y))
   if yi <= 0 || winheight(0) < yi
-    if winid > 0
-      call popup_close(winid)
-    endif
+    call popup_close(winid)
 
     return
   endif
 
   call popup_move(winid, {'line' : baseline + yi})
 
-  call timer_start(a:interval, {-> s:update(a:text, winid, a:popup_opts, a:interval, a:velocity, a:winline, baseline, y)})
+  call timer_start(a:interval, {-> s:update(a:text, winid, a:popup_opts, a:interval, a:velocity, baseline, a:y + a:interval * a:velocity)})
 endfunction
 
 
